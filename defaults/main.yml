@@ -3,6 +3,22 @@
 system_hostname: "raspberrypi"
 system_ssh_user_password: "raspberry"
 system_ssh_user_salt: "salt"
+system_users:
+ - { username: "passwordless_sudoer",  
+     public_key: "{{ passwordless_sudoers_pub_key }}", 
+     password: 'passwordless_sudoers_password',           # -> Escape one single quote by writing it twice: '' 
+     password_salt: 'passwordless_sudoers_passowrd_salt', # -> Escape one single quote by writing it twice: '' 
+     sudoer,
+     no_sudo_passwd }
+ - { username: "sudoer",  
+     public_key: "{{ sudoers_pub_key }}", 
+     password: 'sudoers_password', 
+     password_salt: 'sudoers_passowrd_salt',
+     sudoer }   
+ - { username: "no_sudoer",  
+     public_key: "{{ no_sudoers_pub_key }}", 
+     password: 'no_sudoers_password', 
+     password_salt: 'no_sudoers_password_salt' }
 system_locale: "en_US.UTF-8"
 system_timezone: "Europe/Stockholm"
 system_tmpfs_mounts:
