@@ -1,0 +1,12 @@
+---
+- name: Write network interfaces configuration to /etc/dhcpcd.conf
+  blockinfile:
+    path: /etc/dhcpcd.conf
+    block: |
+      interface {{ item.interface }}
+      static ip_address={{ item.ip }}
+      static routers={{ item.gateway }}
+      static domain_name_servers={{ item.dns_servers }}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.interface }}"
+  with_items: "{{ system_interfaces }}"
+  when: system_interfaces|length > 0   

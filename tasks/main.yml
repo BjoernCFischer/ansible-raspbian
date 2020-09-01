@@ -9,6 +9,11 @@
   tags:
     - hostname
 
+- import_tasks: interfaces.yml
+  when: system_interfaces|length > 0
+  tags:
+    - interfaces
+
 - import_tasks: locale.yml
   tags:
     - locale

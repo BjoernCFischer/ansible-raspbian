@@ -1,6 +1,8 @@
 ---
 
 system_hostname: "raspberrypi"
+system_interfaces:
+ - { interface: "eth0", ip: "192.168.0.99/24", gateway: "192.168.0.1", dns_servers: "192.168.0.1" }
 system_ssh_user_password: "raspberry"
 system_ssh_user_salt: "salt"
 system_users:
