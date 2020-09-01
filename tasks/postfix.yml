@@ -4,6 +4,7 @@
   apt:
     name:
       - postfix
+      - libsasl2-modules
       - mailutils
     state: present
 
@@ -18,6 +19,18 @@
   notify:
     - restart postfix
 
+- name: configure postfix generic rewrites
+  template:
+    src: postfix/generic_rewrites.j2
+    dest: /etc/postfix/generic
+    owner: root
+    group: root
+    mode: 0644
+  when:
+  notify:
+    - postmap generic_rewrites
+    - restart postfix
+    
 - name: set root email alias {{ postfix_sasl_user }}
   lineinfile:
     dest: /etc/aliases
@@ -27,7 +40,7 @@
   when: postfix_sasl_user is defined
   notify:
     - postfix new aliases
-
+    
 - name: configure postfix sasl username/password
   template:
     src: postfix/sasl_passwd.j2
