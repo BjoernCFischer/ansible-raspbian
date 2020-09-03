@@ -19,5 +19,5 @@ script:
   - make test
   - make test-idempotence
 
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
+# notifications:
+  # webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
