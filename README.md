@@ -1,7 +1,6 @@
 # ansible-raspbian
 
-[![Ansible Role](https://img.shields.io/ansible/role/30388.svg)](https://galaxy.ansible.com/hannseman/raspbian) 
-[![Travis (.org)](https://img.shields.io/travis/hannseman/ansible-raspbian.svg)](https://travis-ci.com/hannseman/ansible-raspbian)
+[![Travis (.org)](https://api.travis-ci.com/BjoernCFischer/ansible-raspbian.svg?branch=master)](https://travis-ci.com/github/BjoernCFischer/ansible-raspbian)
 
 This role will setup a secure basic Raspbian environment with sensible defaults.
 
