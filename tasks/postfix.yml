@@ -30,7 +30,7 @@
   notify:
     - postmap generic_rewrites
     - restart postfix
-    
+
 - name: set root email alias {{ postfix_sasl_user }}
   lineinfile:
     dest: /etc/aliases
@@ -40,7 +40,7 @@
   when: postfix_sasl_user is defined
   notify:
     - postfix new aliases
-    
+
 - name: configure postfix sasl username/password
   template:
     src: postfix/sasl_passwd.j2

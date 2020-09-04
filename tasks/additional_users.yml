@@ -5,17 +5,17 @@
     shell: /bin/bash
     group: users
     groups: "{{ 'sudo' if item.sudoer is defined else '' }}"
-    append: true # --> user is not removed from any other group
+    append: true                                                # --> user is not removed from any other group
     password: "{{ item.password|password_hash('sha512', item.password_salt) }}"
-  loop: "{{ system_users }}"  
-      
+  loop: "{{ system_users }}"
+
 - name: Set authorized key for user {{ item.username }}
   authorized_key:
     user: "{{ item.username }}"
     state: present
     key: "{{ item.public_key }}"
   loop: "{{ system_users }}"
-  
+
 - name: Force usual sudoers to enter their password
   lineinfile:
     dest: /etc/sudoers
@@ -23,7 +23,7 @@
     regexp: '^%sudo'
     line: '%sudo ALL=(ALL) ALL'
     validate: 'visudo -cf %s'
-  
+
 - name: Allow certain users sudo without a password
   lineinfile:
     dest: /etc/sudoers

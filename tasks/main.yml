@@ -25,12 +25,12 @@
 - import_tasks: user.yml
   tags:
     - user
-   
+
 - import_tasks: additional_users.yml
   tags:
     - additional_users
-  when: system_users|length > 0   
-  
+  when: system_users|length > 0
+
 - import_tasks: alternatives.yml
   tags:
     - alternatives

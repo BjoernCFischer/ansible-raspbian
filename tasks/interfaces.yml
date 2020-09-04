@@ -9,4 +9,4 @@
       static domain_name_servers={{ item.dns_servers }}
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.interface }}"
   with_items: "{{ system_interfaces }}"
-  when: system_interfaces|length > 0   
+  when: system_interfaces|length > 0

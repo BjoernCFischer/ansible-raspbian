@@ -2,31 +2,34 @@
 
 system_hostname: "raspberrypi"
 system_interfaces:
- - { interface: "eth0", ip: "192.168.0.99/24", gateway: "192.168.0.1", dns_servers: "192.168.0.1" }
+ - {interface: "eth0",
+    ip: "192.168.0.99/24",
+    gateway: "192.168.0.1",
+    dns_servers: "192.168.0.1"}
 system_ssh_user_password: "raspberry"
 system_ssh_user_salt: "salt"
 system_users:
- - { username: "passwordless_sudoer",  
-     public_key: "{{ passwordless_sudoers_pub_key }}", 
-     password: 'passwordless_sudoers_password',           # -> Escape one single quote by writing it twice: '' 
-     password_salt: 'passwordless_sudoers_passowrd_salt', # -> Escape one single quote by writing it twice: '' 
-     sudoer,
-     no_sudo_passwd }
- - { username: "sudoer",  
-     public_key: "{{ sudoers_pub_key }}", 
-     password: 'sudoers_password', 
-     password_salt: 'sudoers_passowrd_salt',
-     sudoer }   
- - { username: "no_sudoer",  
-     public_key: "{{ no_sudoers_pub_key }}", 
-     password: 'no_sudoers_password', 
-     password_salt: 'no_sudoers_password_salt' }
+ - {username: "passwordless_sudoer",
+    public_key: "{{ passwordless_sudoers_pub_key }}",
+    password: 'passwordless_sudoers_password',
+    password_salt: 'passwordless_sudoers_passowrd_salt',
+    sudoer,
+    no_sudo_passwd}
+ - {username: "sudoer",
+    public_key: "{{ sudoers_pub_key }}",
+    password: 'sudoers_password',
+    password_salt: 'sudoers_passowrd_salt',
+    sudoer}
+ - {username: "no_sudoer",
+    public_key: "{{ no_sudoers_pub_key }}",
+    password: 'no_sudoers_password',
+    password_salt: 'no_sudoers_password_salt'}
 system_locale: "en_US.UTF-8"
 system_timezone: "Europe/Stockholm"
 system_tmpfs_mounts:
-  - { src: "/run", size: "10%", options: "nodev,noexec,nosuid" }
-  - { src: "/tmp", size: "10%", options: "nodev,nosuid" }
-  - { src: "/var/log", size: "10%", options: "nodev,noexec,nosuid" }
+ - {src: "/run", size: "10%", options: "nodev,noexec,nosuid"}
+ - {src: "/tmp", size: "10%", options: "nodev,nosuid"}
+ - {src: "/var/log", size: "10%", options: "nodev,noexec,nosuid"}
 
 system_packages: []
 system_default_editor_path: "/usr/bin/vi"
@@ -38,9 +41,9 @@ logwatch_interval: "weekly"
 postfix_hostname: "{{ ansible_hostname }}"
 postfix_mailname: "{{ ansible_hostname }}"
 postfix_mydestination:
-  - "{{ postfix_hostname }}"
-  - localdomain
-  - localhost
+ - "{{ postfix_hostname }}"
+ - localdomain
+ - localhost
   - localhost.localdomain
 postfix_relayhost: smtp.gmail.com
 postfix_relayhost_port: 587
@@ -56,7 +59,7 @@ ssh_public_keys: []
 ssh_banner:
 
 ufw_rules:
-  - {rule: "allow", port: "22", proto: "tcp"}
+ - {rule: "allow", port: "22", proto: "tcp"}
 
 ufw_allow_igmp: false
 
