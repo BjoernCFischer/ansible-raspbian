@@ -22,6 +22,9 @@
     postfix_sasl_password: hunter2
     ssh_public_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXTGInmtpoG9rYmT/3DpL+0o/sH2shys+NwJLo8NnCj
+    passwordless_sudoers_pub_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXTGInmtpoG9rYmT/3DpL+0o/sH2shys+NwJLo8NnCj
+    sudoers_pub_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXTGInmtpoG9rYmT/3DpL+0o/sH2shys+NwJLo8NnCj
+    no_sudoers_pub_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJXTGInmtpoG9rYmT/3DpL+0o/sH2shys+NwJLo8NnCj
     ssh_banner: UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
     ufw_allow_igmp: true
     rpi_boot_config:
