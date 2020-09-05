@@ -50,6 +50,7 @@ postfix_relayhost_port: 587
 postfix_sasl_user:
 postfix_sasl_password:
 postfix_smtp_tls_cafile: /etc/ssl/certs/ca-certificates.crt
+postfix_rewrite_address: me@example.com
 
 rpi_boot_config: {}
 rpi_cmdline_config: {}
