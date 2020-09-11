@@ -1,43 +1,94 @@
 ---
 
+# apt-get installs listed packages
+system_packages: []
+
+# The desired system hostname
 system_hostname: "raspberrypi"
-system_interfaces:
- - {interface: "eth0",
-    ip: "192.168.0.99/24",
-    gateway: "192.168.0.1",
-    dns_servers: "192.168.0.1"}
-system_ssh_user_password: "raspberry"
-system_ssh_user_salt: "salt"
-system_users:
- - {username: "passwordless_sudoer",
-    public_key: "{{ passwordless_sudoers_pub_key }}",
-    password: 'passwordless_sudoers_password',
-    password_salt: 'salt',
-    sudoer,
-    no_sudo_passwd}
- - {username: "sudoer",
-    public_key: "{{ sudoers_pub_key }}",
-    password: 'sudoers_password',
-    password_salt: 'salt',
-    sudoer}
- - {username: "no_sudoer",
-    public_key: "{{ no_sudoers_pub_key }}",
-    password: 'no_sudoers_password',
-    password_salt: 'salt'}
+
+# The network interface configurations (empty list for "unchanged")
+system_interfaces: []
+# - {interface: "eth0",
+#    ip: "192.168.0.99/24",
+#    gateway: "192.168.0.1",
+#    dns_servers: "192.168.0.1"}
+
+# The system locale and timezone
 system_locale: "en_US.UTF-8"
 system_timezone: "Europe/Stockholm"
+
+# List dictionaries of desired tmpfs mounts.
 system_tmpfs_mounts:
  - {src: "/run", size: "10%", options: "nodev,noexec,nosuid"}
  - {src: "/tmp", size: "10%", options: "nodev,nosuid"}
  - {src: "/var/log", size: "10%", options: "nodev,noexec,nosuid"}
 
-system_packages: []
-system_default_editor_path: "/usr/bin/vi"
-logwatch_tmp_dir: /var/cache/logwatch
-logwatch_mailto: "root"
-logwatch_detail: "Low"
-logwatch_interval: "weekly"
+# The password info for ansible_ssh_user (should be configured as pi).
+# system_ssh_user_password: the password - CHANGE TO SOMETHING SECURE.
+# system_ssh_user_salt: the salt - CHANGE TO SOMETHING SECURE AND RANDOM
+system_ssh_user_password: "raspberry"
+system_ssh_user_salt: "salt"
 
+# The additional users to create
+# username: the desired username
+# public_key: the public key for passwordless login
+# password: the desired password
+# sudoer: flag to indicate the user should be able to sudo commands
+# no_sudo_password: flag to indicate the user can sudo passwordless
+system_users: []
+# - {username: "passwordless_sudoer",
+#    public_key: "{{ passwordless_sudoers_pub_key }}",
+#    password: 'passwordless_sudoers_password',
+#    password_salt: 'salt',
+#    sudoer,
+#    no_sudo_passwd}
+# - {username: "sudoer",
+#    public_key: "{{ sudoers_pub_key }}",
+#    password: 'sudoers_password',
+#    password_salt: 'salt',
+#    sudoer}
+# - {username: "no_sudoer",
+#    public_key: "{{ no_sudoers_pub_key }}",
+#    password: 'no_sudoers_password',
+#    password_salt: 'salt'}
+
+# Path to default editor
+system_default_editor_path: "/usr/bin/vi"
+
+# SSH configurtaion
+# ssh_sshd_config: Path to sshd configuration file
+# ssh_public_keys: list of ssh public keys to update ~/.authorized_keys.
+#                  Note: One of these needs to be one that Ansible is using.
+# ssh_banner: String to present when connecting to host over ssh
+ssh_sshd_config: "/etc/ssh/sshd_config"
+ssh_public_keys: []
+ssh_banner: Welcome!
+
+# UFW firewall configuration
+# ufw_rules: firewall rules to allow port based communication
+#            NOTE: should always allow SSH to keep Ansible functioning
+# ufw_allow_igmp: allows/forbids IGMP (multicast) traffic
+ufw_rules:
+ - {rule: "allow", port: "22", proto: "tcp"}
+ufw_allow_igmp: false
+
+# Raspberry Pi configuration
+# rpi_boot_config: updates /boot/config.txt with `{{ key }}: {{ value }}`
+# rpi_cmdline_config: run raspi-config -noint do_{{ key }} {{ value }].
+# See https://github.com/raspberrypi-ui/rc_gui/blob/master/src/rc_gui.c#L23-L70
+rpi_boot_config: {}
+rpi_cmdline_config: {}
+
+# Postfix configuration
+# postfix_hostname: the hostname for outbound mail
+# postfix_mailname: the "mailname" - location postfix reads the hostname
+# postfix_mydestination: destinations to reach by local transport
+# postfix_relayhost: host to relay mail to
+# postfix_relayhost_port: relay port (possibly 587)
+# postfix_sasl_user: the user on the relay host, e.g. your Gmail address
+# postfix_sasl_password: the password on the relay host e.g. your Gmail password
+# postfix_smtp_tls_cafile: the trusted CA certs to authenticate relay host
+# postfix_rewrite_address: rewrite sender address (if needed by relay host)
 postfix_hostname: "{{ ansible_hostname }}"
 postfix_mailname: "{{ ansible_hostname }}"
 postfix_mydestination:
@@ -50,20 +101,20 @@ postfix_relayhost_port: 587
 postfix_sasl_user:
 postfix_sasl_password:
 postfix_smtp_tls_cafile: /etc/ssl/certs/ca-certificates.crt
-postfix_rewrite_address: me@example.com
+postfix_rewrite_address:
 
-rpi_boot_config: {}
-rpi_cmdline_config: {}
-
-ssh_sshd_config: "/etc/ssh/sshd_config"
-ssh_public_keys: []
-ssh_banner:
-
-ufw_rules:
- - {rule: "allow", port: "22", proto: "tcp"}
-
-ufw_allow_igmp: false
-
+# Recipient of unattended-upgrades report
 unattended_upgrades_email_address: root
 
+# Logwatch configuration.
+# logwatch_tmp_dir: logwatch cache directory
+# logwatch_mailto: User/email which receives Logwatch reports
+# logwatch_detail: Logwatch report detail level
+# logwatch_interval: How often to receive Logwatch report (weekly/daily)
+logwatch_tmp_dir: /var/cache/logwatch
+logwatch_mailto: "root"
+logwatch_detail: "Low"
+logwatch_interval: "weekly"
+
+# Internal variable used when running tests - should not be used.
 ansible_raspbian_testing: false
