@@ -22,6 +22,22 @@
     system_packages:
       - vim
     system_ssh_user_salt: lJC5x7N90N
+    system_users:
+      - {username: "passwordless_sudoer",
+         public_key: "{{ passwordless_sudoers_pub_key }}",
+         password: 'passwordless_sudoers_password',
+         password_salt: 'salt',
+         sudoer,
+         no_sudo_passwd}
+      - {username: "sudoer",
+         public_key: "{{ sudoers_pub_key }}",
+         password: 'sudoers_password',
+         password_salt: 'salt',
+         sudoer}
+      - {username: "no_sudoer",
+         public_key: "{{ no_sudoers_pub_key }}",
+         password: 'no_sudoers_password',
+         password_salt: 'salt'}
     system_default_editor_path: "/usr/bin/vim.basic"
     postfix_sasl_user: root@example.com
     postfix_sasl_password: hunter2
