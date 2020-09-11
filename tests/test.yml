@@ -14,6 +14,11 @@
     - ../../
   vars:
     ansible_raspbian_testing: true
+    system_interfaces:
+      - {interface: "eth0",
+         ip: "192.168.0.99/24",
+         gateway: "192.168.0.1",
+         dns_servers: "192.168.0.1"}
     system_packages:
       - vim
     system_ssh_user_salt: lJC5x7N90N
