@@ -52,11 +52,39 @@
   notify:
     - restart sshd
 
-- name: set ssh allowed users to {{ ansible_ssh_user }}
+- name: Check if AllowUsers directive is present at all
   lineinfile:
     dest: "{{ ssh_sshd_config }}"
-    regexp: "^#?AllowUsers"
-    line: "AllowUsers {{ ansible_ssh_user }}"
+    regexp: "^#?AllowUsers.*$"
+    state: absent
+  check_mode: true
+  changed_when: false
+  register: allowusers_line
+
+- name: Make sure AllowUsers directive is present at all
+  lineinfile:
+    dest: "{{ ssh_sshd_config }}"
+    line: 'AllowUsers'
+  when: not allowusers_line.found
+  notify:
+    - restart sshd
+
+- name: Check if {{ ansible_ssh_user }} is already contained in AllowUsers
+  lineinfile:
+    dest: "{{ ssh_sshd_config }}"
+    regexp: "^#?AllowUsers .*{{ ansible_ssh_user }}.*$"
+    state: absent
+  check_mode: true
+  changed_when: false
+  register: permission_already
+
+- name: Add {{ ansible_ssh_user }} to ssh allowed users to if not already
+  lineinfile:
+    dest: "{{ ssh_sshd_config }}"
+    backrefs: true
+    regexp: "^#?AllowUsers(.*)$"
+    line: 'AllowUsers\1 {{ ansible_ssh_user }}'
+  when: not permission_already.found
   notify:
     - restart sshd
 
