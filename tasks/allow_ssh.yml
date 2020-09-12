@@ -1,5 +1,5 @@
 ---
-# outer loop variable: user
+# Uses variable: allow_user
 - name: Check if AllowUsers directive is present at all
   lineinfile:
     dest: "{{ ssh_sshd_config }}"
@@ -17,21 +17,21 @@
   notify:
     - restart sshd
 
-- name: Check if {{ user.username }} is already contained in AllowUsers
+- name: Check if {{ allow_user }} is already contained in AllowUsers
   lineinfile:
     dest: "{{ ssh_sshd_config }}"
-    regexp: "^#?AllowUsers .*{{ user.username }}.*$"
+    regexp: "^#?AllowUsers .*{{ allow_user }}.*$"
     state: absent
   check_mode: true
   changed_when: false
   register: permission_already
 
-- name: Add {{ user.username }} to ssh allowed users to if not already
+- name: Add {{ allow_user }} to ssh allowed users to if not already
   lineinfile:
     dest: "{{ ssh_sshd_config }}"
     backrefs: true
     regexp: "^#?AllowUsers(.*)$"
-    line: 'AllowUsers\1 {{ user.username }}'
+    line: 'AllowUsers\1 {{ allow_user }}'
   when: not permission_already.found
   notify:
     - restart sshd

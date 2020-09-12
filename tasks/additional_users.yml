@@ -33,7 +33,8 @@
   loop: "{{ system_users }}"
   when: item.no_sudo_passwd is defined
 
-- include_tasks: allow_ssh.yml
-  loop: "{{ system_users }}"
+- name: Including allow_ssh.yml to update ssh AllowUsers directive
+  include_tasks: allow_ssh.yml
+  loop: "{{ system_users | map(attribute='username') | list }}"
   loop_control:
-    loop_var: user
+    loop_var: allow_user
