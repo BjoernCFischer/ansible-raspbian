@@ -5,7 +5,7 @@
     shell: /bin/bash
     group: users
     groups: "{{ 'sudo' if item.sudoer is defined else '' }}"
-    append: true                                                # --> user is not removed from any other group
+    append: true
     password: "{{ item.password|password_hash('sha512', item.password_salt) }}"
   loop: "{{ system_users }}"
 
@@ -32,8 +32,9 @@
     validate: 'visudo -cf %s'
   loop: "{{ system_users }}"
   when: item.no_sudo_passwd is defined
-  
+
 - include_tasks: allow_ssh.yml
   loop: "{{ system_users }}"
   loop_control:
     loop_var: user
+    
