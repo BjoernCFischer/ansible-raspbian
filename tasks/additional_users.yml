@@ -32,3 +32,8 @@
     validate: 'visudo -cf %s'
   loop: "{{ system_users }}"
   when: item.no_sudo_passwd is defined
+  
+- include_tasks: allow_ssh.yml
+  loop: "{{ system_users }}"
+  loop_control:
+    loop_var: user
