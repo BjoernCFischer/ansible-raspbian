@@ -1,7 +1,7 @@
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 TEST_INVENTORY_FILE ?= tests/inventory.yml
 TEST_PLAYBOOK ?= tests/test.yml
-DOCKER_IMAGE ?= hannseman/raspbian
+DOCKER_IMAGE ?= xzaero/raspbian
 
 .PHONY: lint test docker
 
