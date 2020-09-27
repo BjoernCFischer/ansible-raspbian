@@ -109,11 +109,11 @@ unattended_upgrades_email_address: root
 # Logwatch configuration.
 # logwatch_tmp_dir: logwatch cache directory
 # logwatch_mailto: User/email which receives Logwatch reports
-# logwatch_detail: Logwatch report detail level
+# logwatch_detail: Logwatch report detail level (high/med/low)
 # logwatch_interval: How often to receive Logwatch report (weekly/daily)
 logwatch_tmp_dir: /var/cache/logwatch
 logwatch_mailto: "root"
-logwatch_detail: "Low"
+logwatch_detail: "low"
 logwatch_interval: "weekly"
 
 # Internal variable used when running tests - should not be used.
