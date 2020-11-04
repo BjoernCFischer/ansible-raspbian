@@ -1,9 +1,9 @@
 ---
 
-- name: mount tmpfs
+- name: Mount tmpfs
   mount:
     src: tmpfs
-    name: "{{ item.src }}"
+    path: "{{ item.src }}"
     fstype: tmpfs
     opts: "defaults,{{ item.options }},size={{ item.size }}"
     dump: "0"
@@ -11,3 +11,23 @@
     state: mounted
   with_items: "{{ system_tmpfs_mounts }}"
   when: system_tmpfs_mounts|length > 0
+
+- name: Make sure nfs mountpoints exist
+  file:
+    path: "{{ item.mountpoint }}"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  with_items: "{{ system_nfs_mounts }}"
+  when: system_nfs_mounts|length > 0
+
+- name: Mount nfs
+  mount:
+    src: "{{ item.nfs_share }}"
+    path: "{{ item.mountpoint }}"
+    fstype: nfs
+    opts: "{{ item.options }}"
+    state: mounted
+  with_items: "{{ system_nfs_mounts }}"
+  when: system_nfs_mounts|length > 0

@@ -11,6 +11,7 @@ This role will setup a secure basic Raspbian environment with sensible defaults.
  * Configure network interfaces.
  * Configure locale.
  * Mount tmpfs on write-intensive directories to increase the lifespan of SD-card. 
+ * Mount nfs volumes if configured.
  * Change the password on default user.
  * Create additional users.
  * Set the default editor.
@@ -87,6 +88,12 @@ system_tmpfs_mounts:
  - {src: "/run", size: "10%", options: "nodev,noexec,nosuid"}
  - {src: "/tmp", size: "10%", options: "nodev,nosuid"}
  - {src: "/var/log", size: "10%", options: "nodev,noexec,nosuid"}
+
+# List dictionaries of desired nfs mounts.
+system_nfs_mounts: []
+# - {nfs_share: "192.168.1.22:/my_nfs_share",
+#    mountpoint: "/mnt/my_nfs_mount",
+#    options: "rw,sync,hard,intr"}
 
 # The password info for ansible_ssh_user (should be configured as pi).
 # system_ssh_user_password: the password - CHANGE TO SOMETHING SECURE.
